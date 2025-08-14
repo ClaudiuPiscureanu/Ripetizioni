@@ -1,0 +1,138 @@
+=== ESERCIZI ARDUINO - SPECIFICHE ===
+
+------------------------------------------------------------------
+ESERCIZIO 1: SEMAFORO INTERATTIVO
+------------------------------------------------------------------
+Difficoltà: Media
+
+Obiettivo:
+Realizzare un semaforo controllato da pulsante e potenziometro.
+
+Componenti richiesti:
+- Arduino Uno/Nano
+- 1 LED rosso
+- 1 LED giallo 
+- 1 LED verde
+- 3 resistenze 220Ω
+- 1 potenziometro 10kΩ
+- 1 pulsante
+- 1 resistenza 10kΩ (pull-down)
+- Breadboard e cavi
+
+Specifiche funzionali:
+1. Il pulsante attiva/disattiva il sistema
+2. Il potenziometro regola la durata della luce verde (range 2-10 sec)
+3. Sequenza semaforica:
+   - Rosso: 5 secondi (fisso)
+   - Giallo: 3 secondi (lampeggiante a 2Hz)
+   - Verde: durata impostata dal potenziometro
+4. Tutti i LED devono spegnersi quando il sistema è disattivato
+
+Estensioni consigliate:
+- Utilizzare millis() invece di delay()
+- Aggiungere un buzzer durante la fase gialla
+- Implementare una macchina a stati finiti
+
+------------------------------------------------------------------
+ESERCIZIO 2: CONTROLLO STRIP LED RGB
+------------------------------------------------------------------ 
+Difficoltà: Medio-Alta
+
+Obiettivo:
+Creare un controller per strip LED con diverse modalità operative.
+
+Componenti richiesti:
+- Arduino Uno/Nano
+- 1 strip LED WS2812B (NeoPixel)
+- 1 potenziometro 10kΩ
+- 1 pulsante
+- 1 resistenza 10kΩ (pull-down)
+- Alimentazione esterna per strip LED (se necessario)
+
+Specifiche funzionali:
+1. Il pulsante cicla tra 3 modalità:
+   - Modalità 1: Colore fisso (HUE regolato dal potenziometro)
+   - Modalità 2: Effetto "respirazione" (velocità regolata dal pot)
+   - Modalità 3: Rainbow cycle (velocità regolata dal pot)
+2. Il potenziometro assume funzioni diverse per ogni modalità
+3. La strip LED deve spegnersi quando il sistema è disattivato
+
+Librerie necessarie:
+- Adafruit_NeoPixel
+
+Estensioni consigliate:
+- Salvataggio dello stato in EEPROM
+- Utilizzo di interrupt per il pulsante
+- Aggiunta di effetti supplementari
+- Regolazione della luminosità
+
+Note:
+Per la strip LED WS2812B:
+- Collegare il pin DIN a un pin PWM dell'Arduino
+- Verificare i requisiti di alimentazione
+
+
+------------------------------------------------------------------
+ESERCIZIO 3: CONTROLLO STRIP LED CON POTENZIOMETRO E PULSANTE
+------------------------------------------------------------------
+
+Difficoltà: Media
+
+Componenti richiesti:
+- Arduino Uno/Nano
+- Strip LED WS2812B (NeoPixel, 8-16 LED)
+- 1 potenziometro 10kΩ
+- 1 pulsante
+- 1 resistenza 10kΩ (pull-down)
+- Breadboard e cavi jumper
+- Alimentazione esterna 5V (consigliata per strip lunghe)
+
+Descrizione:
+Realizzare un controller per strip LED con:
+1) Pulsante per cambiare modalità (3 modalità)
+2) Potenziometro per regolare parametri in ciascuna modalità
+3) Strip LED che risponde agli input
+
+Modalità operative:
+1) Modalità Colore Fisso:
+   - Potenziometro seleziona colore (tutta la strip)
+   - Range: Rosso → Verde → Blu → Bianco
+
+2) Modalità Effetto "Respirazione":
+   - Potenziometro regola velocità fade
+   - Colore fisso (es. bianco) con fade in/out
+
+3) Modalità Rainbow:
+   - Potenziometro regola velocità transizione
+   - Effetto arcobaleno scorrevole
+
+Collegamenti:
+- Strip LED:
+  - DIN → Pin 6
+  - 5V → Alimentazione esterna (consigliato)
+  - GND → GND Arduino
+- Potenziometro:
+  - Pin centrale → A0
+  - Altri pin → 5V e GND
+- Pulsante:
+  - Un pin → Pin 2
+  - Altro pin → GND (con resistenza 10kΩ pull-down)
+
+Librerie richieste:
+#include <Adafruit_NeoPixel.h>
+
+Funzionalità avanzate (opzionali):
+- Salvataggio ultima modalità in EEPROM
+- Regolazione luminosità con doppio click
+- Transizioni fluide tra modalità
+- Aggiunta di ulteriori effetti
+
+Note:
+- Per strip lunghe (>8 LED) usare alimentazione separata
+- Verificare polarità strip LED
+- Gestire debounce per pulsante
+
+Varianti possibili:
+- Aggiunta sensore LDR per regolazione automatica luminosità
+- Implementazione timer spegnimento automatico
+- Controllo via Bluetooth/Infrarossi

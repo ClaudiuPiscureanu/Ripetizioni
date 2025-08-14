@@ -1,0 +1,148 @@
+# Esercizi sulle Funzioni in C
+
+## ESERCIZIO 1 - LIVELLO PRINCIPIANTE
+### "Calcolatrice Base"
+
+**Consegna:**
+Scrivi un programma C che implementi una semplice calcolatrice con le quattro operazioni fondamentali.
+
+**Specifiche:**
+- Crea quattro funzioni separate: `somma()`, `sottrazione()`, `moltiplicazione()`, `divisione()`
+- Ogni funzione deve accettare due parametri di tipo `float` e restituire il risultato dell'operazione
+- La funzione `divisione()` deve controllare che il divisore non sia zero e stampare un messaggio di errore in caso contrario
+- Nel `main()`, chiedi all'utente di inserire due numeri e l'operazione desiderata
+- Stampa il risultato dell'operazione scelta
+
+**Esempio di output:**
+```
+Inserisci il primo numero: 10.5
+Inserisci il secondo numero: 3.2
+Scegli l'operazione (+, -, *, /): +
+Risultato: 10.50 + 3.20 = 13.70
+```
+
+**Suggerimenti:**
+- Usa `scanf()` per l'input dell'utente
+- Usa un `switch` per gestire la scelta dell'operazione
+- Dichiara i prototipi delle funzioni prima del `main()`
+
+---
+
+## ESERCIZIO 2 - LIVELLO INTERMEDIO
+### "Analisi Statistica di un Array"
+
+**Consegna:**
+Sviluppa un programma che analizza un array di numeri interi fornendo statistiche complete.
+
+**Specifiche:**
+- Implementa le seguenti funzioni:
+  - `leggiArray()`: legge n numeri dall'utente e li inserisce in un array
+  - `stampaArray()`: stampa tutti gli elementi dell'array
+  - `calcolaMedia()`: calcola e restituisce la media aritmetica
+  - `trovaMassimo()`: trova e restituisce il valore massimo
+  - `trovaMinimo()`: trova e restituisce il valore minimo
+  - `contaPari()`: conta quanti numeri pari ci sono
+  - `contaDispari()`: conta quanti numeri dispari ci sono
+  - `ordinaArray()`: ordina l'array in ordine crescente (algoritmo a scelta)
+
+**Vincoli:**
+- L'array deve avere una dimensione massima di 50 elementi
+- L'utente deve poter scegliere quanti numeri inserire (max 50)
+- Usa il passaggio per riferimento dove necessario
+- Il programma deve stampare un report completo con tutte le statistiche
+
+**Esempio di output:**
+```
+Quanti numeri vuoi inserire? 5
+Inserisci 5 numeri: 12 7 23 4 18
+
+REPORT STATISTICO:
+Array originale: 12 7 23 4 18
+Array ordinato: 4 7 12 18 23
+Media: 12.80
+Massimo: 23
+Minimo: 4
+Numeri pari: 3
+Numeri dispari: 2
+```
+
+---
+
+## ESERCIZIO 3 - LIVELLO AVANZATO
+### "Sistema di Gestione Studenti con Ricorsione"
+
+**Consegna:**
+Crea un sistema completo per la gestione di studenti universitari con funzionalità avanzate.
+
+**Specifiche:**
+
+**Struttura Dati:**
+- Definisci una `struct Studente` con: nome, cognome, matricola, array di voti (max 10 esami), numero di esami sostenuti
+
+**Funzioni Richieste:**
+
+1. **Funzioni Ricorsive:**
+   - `calcolaMediaRicorsiva()`: calcola la media dei voti usando ricorsione
+   - `cercaStudenteRicorsivo()`: cerca uno studente per matricola usando ricorsione binaria (se array ordinato)
+   - `stampaStudentiRicorsivo()`: stampa tutti gli studenti usando ricorsione
+
+2. **Funzioni di Gestione Memoria:**
+   - `creaArrayStudenti()`: alloca dinamicamente memoria per n studenti
+   - `liberaMemoria()`: libera tutta la memoria allocata
+   - `ridimensionaArray()`: ridimensiona l'array se necessario
+
+3. **Funzioni di Input/Output:**
+   - `inserisciStudente()`: inserisce un nuovo studente
+   - `inserisciVoto()`: aggiunge un voto ad uno studente esistente
+   - `salvaFile()`: salva tutti i dati su file
+   - `caricaFile()`: carica i dati dal file
+
+4. **Funzioni di Analisi:**
+   - `studentiSopraMedia()`: conta studenti con media > 24
+   - `studenteMigliore()`: trova lo studente con media più alta
+   - `statisticheGenerali()`: calcola statistiche complete del corso
+
+**Vincoli Avanzati:**
+- Usa allocazione dinamica per gestire un numero variabile di studenti
+- Implementa controllo errori per tutte le operazioni di memoria
+- Il programma deve avere un menu interattivo
+- Gestisci il salvataggio/caricamento da file di testo
+- Usa ricorsione dove specificato (non loop)
+- Implementa almeno un algoritmo di ordinamento ricorsivo (es. quicksort)
+
+**Menu del Programma:**
+```
+=== GESTIONE STUDENTI ===
+1. Aggiungi studente
+2. Inserisci voto
+3. Visualizza tutti gli studenti
+4. Cerca studente per matricola
+5. Statistiche corso
+6. Salva su file
+7. Carica da file
+8. Esci
+Scelta: 
+```
+
+**File di Output Esempio (studenti.txt):**
+```
+STUDENTE: Mario Rossi
+MATRICOLA: 123456
+VOTI: 28 30 27 25 29
+MEDIA: 27.80
+---
+STUDENTE: Anna Verdi
+MATRICOLA: 654321  
+VOTI: 30 30 28 29
+MEDIA: 29.25
+```
+
+**Criteri di Valutazione:**
+- Correttezza dell'implementazione ricorsiva
+- Gestione appropriata della memoria dinamica
+- Controllo degli errori
+- Organizzazione e leggibilità del codice
+- Funzionalità complete del menu
+- Gestione corretta dei file
+
+**Bonus:** Implementa una funzione ricorsiva per il calcolo del voto di laurea basato sulla media pesata dei crediti.

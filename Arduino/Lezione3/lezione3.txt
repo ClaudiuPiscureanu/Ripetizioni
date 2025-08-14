@@ -1,0 +1,22 @@
+testo esercizio1:
+abbiamo un bottone e un potenziometo
+il bottone attiva e disattiva il sistema
+il potenziomentro regola la velocita di lampeggiamento di un led:
+	. 0: led spento
+	. 1:9 lampeggia sempre piu veloce
+	. 10 led accesso
+
+
+testo esercizio2: 
+abbiamo 3 led 
+vogliamo simulare il lancio di un dado a 6 faccie.
+useremmo una funzione random (1,6)
+al lancia del dado, scriviamo nella seriale il risultato e accendiamo i 3 led a formare il numero in conversione binaria
+abbiamo 2^3 disposizioni, piu che sufficiente.
+1 001
+2 010
+3 011
+4 100
+5 101
+6 110
+

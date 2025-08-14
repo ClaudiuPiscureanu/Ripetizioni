@@ -1,0 +1,111 @@
+// C++ code - Versione corretta con commenti sui problemi trovati
+//
+#include <Adafruit_NeoPixel.h>
+
+#define PIN_LED 2
+#define NUM_LEDS 64
+#define RIGHE 8
+#define COLONNE 8
+
+#define POT_X A0
+#define POT_Y A1
+#define BOTTONE 4
+
+Adafruit_NeoPixel striscia = Adafruit_NeoPixel(NUM_LEDS, PIN_LED, NEO_GRB + NEO_KHZ800);
+
+int x = 0;
+int y = 0;
+int stato_led[64]; // ERRORE: Array non inizializzato (contiene valori casuali)
+int premuto = 0;   
+
+void setup() {
+  striscia.begin();
+  striscia.show(); 
+  pinMode(BOTTONE, INPUT_PULLUP); // CORREZIONE: Aggiunto pull-up resistor per stabilità
+  
+  // CORREZIONE: Inizializzazione dell'array stato_led
+  for(int i = 0; i < NUM_LEDS; i++) {
+    stato_led[i] = 0;
+  }
+}
+
+void loop() {
+  int valX = analogRead(POT_X);
+  int valY = analogRead(POT_Y);
+
+  // ERRORE POTENZIALE: La divisione può causare overflow quando valX/valY = 1023
+  // x = valX * COLONNE / 1023; // Può dare risultato 8 quando valX = 1023
+  // y = valY * RIGHE / 1023;   // Può dare risultato 8 quando valY = 1023
+  
+  // CORREZIONE: Mappatura più sicura
+  x = map(valX, 0, 1023, 0, COLONNE - 1);
+  y = map(valY, 0, 1023, 0, RIGHE - 1);
+
+  // NOTA: Questi controlli diventano ridondanti con map(), ma li mantengo per sicurezza
+  if (x < 0) x = 0;
+  if (x > 7) x = 7;
+  if (y < 0) y = 0;
+  if (y > 7) y = 7;
+
+  // ERRORE PRINCIPALE: Calcolo dell'indice non considera il serpentine pattern
+  // delle strip LED collegate in serie
+  int indice;
+  if (y % 2 == 0) {
+    // Righe pari: da sinistra a destra
+    indice = y * COLONNE + x;
+  } else {
+    // CORREZIONE: Righe dispari: da destra a sinistra (serpentine)
+    indice = y * COLONNE + (COLONNE - 1 - x);
+  }
+
+  // Gestione del bottone - CORREZIONE: Invertita logica per INPUT_PULLUP
+  if (digitalRead(BOTTONE) == LOW && premuto == 0) {
+    if (stato_led[indice] == 0) {
+      stato_led[indice] = 1;
+    } else {
+      stato_led[indice] = 0;
+    }
+    premuto = 1;
+  }
+
+  if (digitalRead(BOTTONE) == HIGH) { // CORREZIONE: HIGH per INPUT_PULLUP
+    premuto = 0;
+  }
+
+  // Aggiornamento dei LED
+  int i = 0;
+  while (i < NUM_LEDS) {
+    if (i == indice) {
+      // Cursore attuale in rosso
+      striscia.setPixelColor(i, striscia.Color(255, 0, 0));
+    } else if (stato_led[i] == 1) {
+      // LED permanenti in bianco
+      striscia.setPixelColor(i, striscia.Color(255, 255, 255)); 
+    } else {
+      // LED spenti
+      striscia.setPixelColor(i, 0); 
+    }
+    i = i + 1;
+  }
+
+
+  striscia.show();
+  delay(20);
+}
+
+/*
+ERRORI IDENTIFICATI:
+1. Array stato_led non inizializzato (conteneva valori casuali)
+2. pinMode del bottone senza pull-up resistor
+3. Calcolo dell'indice non considerava il pattern serpentine delle strip LED
+4. Possibile overflow nella mappatura dei potenziometri
+5. Logica del bottone invertita dopo l'aggiunta del pull-up
+
+MIGLIORAMENTI APPORTATI:
+- Inizializzazione corretta dell'array
+- Uso di INPUT_PULLUP per stabilità
+- Calcolo corretto dell'indice per pattern serpentine
+- Uso della funzione map() per mappatura sicura
+- Correzione della logica del bottone
+*/
+

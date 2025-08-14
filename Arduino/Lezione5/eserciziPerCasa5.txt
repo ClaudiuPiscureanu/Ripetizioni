@@ -1,0 +1,51 @@
+=== ESAME ARDUINO - STRIP LED A PROSSIMITÀ ===
+
+COMPONENTI:
+- Arduino Uno
+- Strip LED WS2812B (30 LED)
+- Sensore HC-SR04
+- Alimentazione 5V 2A
+
+CONSEGNA:
+Realizzare un sistema che:
+1. Legge la distanza dall'oggetto (2-200cm)
+2. Controlla la strip LED in base alla distanza:
+   - <10cm: tutti i LED ROSSI
+   - 10-50cm: LED VERDI (numero proporzionale alla distanza)
+   - ≥50cm: 1 LED BIANCO
+3. Aggiorna l'output ogni 100ms
+
+=== ESAME ARDUINO - CONTROLLO LUCE AMBIENTALE ===
+
+COMPONENTI:
+- Arduino Uno
+- Fotocellula (LDR)
+- 5 LED singoli
+- Potenziometro 10kΩ
+- Resistenza 10kΩ (per LDR)
+
+CONSEGNA:
+Realizzare un sistema che:
+1. Legge l'intensità luminosa ambientale
+2. Legge il valore del potenziometro (soglia)
+3. Accende progressivamente i LED in base a:
+   - Luce < soglia: tutti i LED accesi
+   - Luce ≥ soglia: LED spenti
+4. Mostra lo stato su monitor seriale
+
+=== ESAME ARDUINO - ILLUMINAZIONE AUTOMATICA PIR ===
+
+COMPONENTI:
+- Arduino Uno
+- Sensore PIR
+- Strip LED WS2812B (20 LED)
+- Alimentazione 5V 2A
+
+CONSEGNA:
+Realizzare un sistema che:
+1. Rileva movimento col sensore PIR
+2. Controlla la strip LED:
+   - Movimento rilevato: accensione progressiva a onda
+   - Nessun movimento: spegnimento graduale
+3. Durata accensione: 30 secondi dopo ultimo movimento
+

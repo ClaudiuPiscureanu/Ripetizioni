@@ -1,0 +1,72 @@
+=== ESERCIZIO ARDUINO: "DISEGNO SU MATRICE LED INTERATTIVA" ===
+
+Difficoltà: Medio-Alta
+
+● COMPONENTI REQUISITI:
+- Arduino Mega (per sufficienti pin digitali)
+- Matrice LED formata da N strip WS2812B (es. 8x8 = 64 LED)
+- 2 potenziometri (X e Y)
+- 1 pulsante (con resistenza 10kΩ pull-down)
+- Alimentazione 5V esterna (consigliata >3A per matrici grandi)
+- Condensatore 1000µF (protezione strip LED)
+
+● OBIETTIVO:
+Realizzare un programma che permetta di:
+1. Muovere un cursore lampeggiante sulla matrice usando i potenziometri
+2. Selezionare/accedere LED con il pulsante
+3. Creare disegni personalizzati
+
+● SPECIFICHE TECNICHE:
+
+1. CONTROLLI:
+- Potenziometro X → Movimento orizzontale (colonne)
+- Potenziometro Y → Movimento verticale (righe)
+- Pulsante → Toggle stato LED (acceso/spento)
+
+2. VISUALIZZAZIONE:
+- Cursore lampeggiante (frequenza 2Hz)
+- LED accesi: colore bianco (o colore primario)
+- LED spenti: completamente off
+
+3. LOGICA:
+- Mappatura precisa coordinate (NxM → valori potenziometro)
+- Anti-rimbalzo (debounce) per il pulsante
+- Gestione edge cases (valori potenziometro ai limiti)
+
+● COLLEGAMENTI:
+- Strip LED:
+  - DIN → Pin 6 (PWM)
+  - 5V → Alimentazione esterna
+  - GND → Condensatore → GND Arduino
+- Potenziometro X → A0
+- Potenziometro Y → A1
+- Pulsante → Pin 2 con resistenza 10kΩ → GND
+
+● LIBRERIE NECESSARIE:
+#include <Adafruit_NeoPixel.h>  // Gestione strip LED
+#include <EEPROM.h>             // Opzionale per salvataggio
+
+● FUNZIONALITÀ AVANZATE (OPZIONALI):
+1. Salvataggio disegni in EEPROM
+2. Modalità "cancellazione" con doppio click
+3. Regolazione colore con pressione prolungata
+4. Visualizzazione coordinate seriale (debug)
+
+● PSEUDOCODICE PRINCIPALE:
+1. Inizializza matrice LED
+2. Leggi valori potenziometri → mappa a coordinate (x,y)
+3. Mostra cursore lampeggiante in (x,y)
+4. Se pulsante premuto:
+   - Se LED(x,y) acceso → spegni
+   - Se LED(x,y) spento → accendi (bianco)
+5. Ripeti
+
+● NOTE:
+- Per matrici grandi, ottimizzare refresh rate
+- Calibrare sensibilità potenziometri
+- Gestire correttamente la corrente totale
+
+● VARIANTI:
+- Aggiunta joystick analogico invece dei potenziometri
+- Implementazione undo/redo
+- Esportazione disegni su seriale

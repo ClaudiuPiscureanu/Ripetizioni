@@ -1,0 +1,77 @@
+=== ESERCIZIO ARDUINO: CURSORE LED SU MATRICE ===
+
+Obiettivo:
+Creare un cursore luminoso controllabile tramite pulsanti su una matrice di strip LED.
+
+Componenti richiesti:
+- Arduino Uno/Nano
+- 4 strip LED WS2812B (NeoPixel, 8 LED ciascuna)
+- 4 pulsanti
+- 4 resistenze da 10kΩ (per pull-down)
+- Alimentazione 5V esterna (consigliata)
+- Breadboard e cavi jumper
+
+Configurazione hardware:
+1) Matrice LED:
+   - 4 strip da 4 LED collegate IN SERIE (DIN → DOUT)
+   - Prima strip: DIN al pin 6 Arduino
+   - Alimentazione: 5V e GND a fonte esterna se >16 LED
+
+2) Pulsanti:
+   - SU:     pin 2
+   - GIÙ:    pin 3
+   - DESTRA: pin 4
+   - SINISTRA: pin 5
+   - Collegamento: un lato al pin Arduino, altro lato a GND con resistenza 10kΩ
+
+Funzionalità richieste:
+1) All'accensione:
+   - Accendere il LED in posizione (0,0) -> strip 0, LED 0 (verde)
+   - Tutti gli altri LED spenti
+
+2) Controllo pulsanti:
+   - SU: Muove cursore alla strip SOPRA (decrementa indice strip)
+   - GIÙ: Muove cursore alla strip SOTTO (incrementa indice strip)
+   - DESTRA: Muove cursore a DESTRA nella strip corrente
+   - SINISTRA: Muove cursore a SINISTRA nella strip corrente
+
+3) Vincoli:
+   - Il cursore NON deve uscire dai bordi della matrice
+   - Transizioni fluide (LED precedente si spegne, nuovo si accende)
+
+4) Visualizzazione:
+   - Colore cursore: verde (RGB: 0,150,0)
+   - Luminosità media (evitare correnti eccessive)
+
+Librerie necessarie:
+#include <Adafruit_NeoPixel.h>
+
+Estensioni opzionali:
+1) Effetto "scia luminosa":
+   - I LED precedentemente accesi si sfumano gradualmente
+
+2) Pulsante "AZIONE":
+   - Aggiungere un 5° pulsante per confermare selezione
+
+3) Animazioni:
+   - Lampeggio del cursore quando raggiunge i bordi
+
+Note tecniche:
+1) Mappatura LED:
+   - Strip 0: LED 0-7
+   - Strip 1: LED 8-15
+   - Strip 2: LED 16-23
+   - Strip 3: LED 24-31
+
+2) Formula indice assoluto:
+   indice = (strip * 8) + led
+
+3) Gestione alimentazione:
+   - Per matrici grandi usare condensatore da 1000µF
+   - Evitare di superare 500mA senza alimentazione esterna
+
+Esempio di funzionamento:
+1) Accensione -> LED 0 acceso
+2) Premo DESTRA -> LED 0 si spegne, LED 1 si accende
+3) Premo GIÙ -> LED 1 si spegne, LED 9 si accende
+4) Premo SU -> LED 9 si spegne, LED 1 si accende

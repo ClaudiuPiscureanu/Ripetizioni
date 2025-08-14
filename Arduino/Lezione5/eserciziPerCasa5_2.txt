@@ -1,0 +1,94 @@
+=== ESAME ARDUINO - CONTROLLO VELOCITÀ MOTORE DC ===
+
+COMPONENTI:
+- Arduino Uno
+- Motore DC 5-12V
+- Driver L293D
+- Potenziometro 10kΩ
+- Pulsante
+- Diodo 1N4007 (per protezione)
+
+CONSEGNA:
+Realizzare un sistema che:
+1. Regola la velocità del motore DC tramite potenziometro
+2. Il pulsante inverte la rotazione
+3. Visualizza la velocità su monitor seriale (0-100%)
+
+AIUTI:
+// Configurazione pin
+#define MOTOR_PIN1 5
+#define MOTOR_PIN2 6
+#define ENABLE_PIN 9
+
+// Lettura potenziometro
+int speed = map(analogRead(A0), 0, 1023, 0, 255);
+
+// Inversione direzione
+if(digitalRead(BUTTON_PIN) == HIGH) {
+  digitalWrite(MOTOR_PIN1, !digitalRead(MOTOR_PIN1));
+  digitalWrite(MOTOR_PIN2, !digitalRead(MOTOR_PIN2));
+  delay(200); // debounce
+}
+
+=== ESAME ARDUINO - POSIZIONATORE SERVOMOTORE ===
+
+C
+OMPONENTI:
+- Arduino Uno
+- Servomotore SG90
+- Joystick analogico
+- LED (indicatore posizione)
+
+CONSEGNA:
+Realizzare un sistema che:
+1. Controlla la posizione del servomotore (0-180°) con joystick
+2. Un LED indica quando il servo è a metà corsa (90°)
+3. Visualizza l'angolo su monitor seriale
+
+AIUTI:
+#include <Servo.h>
+Servo myservo;
+
+// Lettura joystick
+int angle = map(analogRead(A0), 0, 1023, 0, 180);
+
+// Controllo LED
+if(angle > 80 && angle < 100) {
+  digitalWrite(LED_PIN, HIGH);
+} else {
+  digitalWrite(LED_PIN, LOW);
+}
+
+=== ESAME ARDUINO - PARCHEGGIO ASSISTITO ===
+
+COMPONENTI:
+- Arduino Uno
+- Sensore ultrasuoni HC-SR04
+- 3 LED (verde, giallo, rosso)
+- Buzzer passivo
+
+CONSEGNA:
+Realizzare un sistema che:
+1. Misura la distanza da un ostacolo (2-200cm)
+2. Segnala con LED e buzzer:
+   - Verde: distanza > 100cm
+   - Giallo: 100-30cm (buzzer intermittente)
+   - Rosso: <30cm (buzzer continuo)
+3. Visualizza la distanza su monitor seriale
+
+AIUTI:
+// Lettura distanza
+long duration = pulseIn(ECHO_PIN, HIGH);
+int distance = duration * 0.034 / 2;
+
+// Controllo uscite
+if(distance < 30) {
+  digitalWrite(RED_PIN, HIGH);
+  tone(BUZZER_PIN, 1000);
+} else if(distance < 100) {
+  digitalWrite(YELLOW_PIN, HIGH);
+  tone(BUZZER_PIN, 500, 200); // beep intermittente
+} else {
+  digitalWrite(GREEN_PIN, HIGH);
+  noTone(BUZZER_PIN);
+}
